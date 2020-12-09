@@ -20,9 +20,9 @@ import java.net.UnknownHostException;
 
 /**
  * Use the default host name resolver via {@link InetAddress}.
+ * 通过{@link InetAddress}使用默认主机名解析程序。
  */
-public class DefaultNameResolver implements NameResolver
-{
+public class DefaultNameResolver implements NameResolver {
     /**
      * Singleton instance which can be used to avoid allocation.
      */
@@ -31,14 +31,11 @@ public class DefaultNameResolver implements NameResolver
     /**
      * {@inheritDoc}
      */
-    public InetAddress resolve(final String name, final String uriParamName, final boolean isReResolution)
-    {
-        try
-        {
+    @Override
+    public InetAddress resolve(final String name, final String uriParamName, final boolean isReResolution) {
+        try {
             return InetAddress.getByName(name);
-        }
-        catch (final UnknownHostException ex)
-        {
+        } catch (final UnknownHostException ex) {
             return null;
         }
     }

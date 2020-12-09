@@ -31,9 +31,9 @@ import static io.aeron.command.ControlProtocolEvents.*;
 
 /**
  * Receives commands from Aeron clients and dispatches them to the {@link DriverConductor} for processing.
+ * 接收来自Aeron客户端的命令并将其发送到{@link DriverConductor}进行处理。
  */
-final class ClientCommandAdapter implements MessageHandler
-{
+final class ClientCommandAdapter implements MessageHandler {
     private final PublicationMessageFlyweight publicationMsgFlyweight = new PublicationMessageFlyweight();
     private final SubscriptionMessageFlyweight subscriptionMsgFlyweight = new SubscriptionMessageFlyweight();
     private final CorrelatedMessageFlyweight correlatedMsgFlyweight = new CorrelatedMessageFlyweight();
@@ -48,12 +48,11 @@ final class ClientCommandAdapter implements MessageHandler
     private final ErrorHandler errorHandler;
 
     ClientCommandAdapter(
-        final AtomicCounter errors,
-        final ErrorHandler errorHandler,
-        final RingBuffer toDriverCommands,
-        final ClientProxy clientProxy,
-        final DriverConductor driverConductor)
-    {
+            final AtomicCounter errors,
+            final ErrorHandler errorHandler,
+            final RingBuffer toDriverCommands,
+            final ClientProxy clientProxy,
+            final DriverConductor driverConductor) {
         this.errors = errors;
         this.errorHandler = errorHandler;
         this.toDriverCommands = toDriverCommands;
@@ -61,22 +60,17 @@ final class ClientCommandAdapter implements MessageHandler
         this.conductor = driverConductor;
     }
 
-    int receive()
-    {
+    int receive() {
         return toDriverCommands.read(this, Configuration.COMMAND_DRAIN_LIMIT);
     }
 
     @SuppressWarnings("MethodLength")
-    public void onMessage(final int msgTypeId, final MutableDirectBuffer buffer, final int index, final int length)
-    {
+    public void onMessage(final int msgTypeId, final MutableDirectBuffer buffer, final int index, final int length) {
         long correlationId = 0;
 
-        try
-        {
-            switch (msgTypeId)
-            {
-                case ADD_PUBLICATION:
-                {
+        try {
+            switch (msgTypeId) {
+                case ADD_PUBLICATION: {
                     publicationMsgFlyweight.wrap(buffer, index);
                     publicationMsgFlyweight.validateLength(msgTypeId, length);
 
@@ -85,8 +79,7 @@ final class ClientCommandAdapter implements MessageHandler
                     break;
                 }
 
-                case REMOVE_PUBLICATION:
-                {
+                case REMOVE_PUBLICATION: {
                     removeMsgFlyweight.wrap(buffer, index);
                     removeMsgFlyweight.validateLength(msgTypeId, length);
 
@@ -95,8 +88,7 @@ final class ClientCommandAdapter implements MessageHandler
                     break;
                 }
 
-                case ADD_EXCLUSIVE_PUBLICATION:
-                {
+                case ADD_EXCLUSIVE_PUBLICATION: {
                     publicationMsgFlyweight.wrap(buffer, index);
                     publicationMsgFlyweight.validateLength(msgTypeId, length);
 
@@ -105,8 +97,7 @@ final class ClientCommandAdapter implements MessageHandler
                     break;
                 }
 
-                case ADD_SUBSCRIPTION:
-                {
+                case ADD_SUBSCRIPTION: {
                     subscriptionMsgFlyweight.wrap(buffer, index);
                     subscriptionMsgFlyweight.validateLength(msgTypeId, length);
 
@@ -115,23 +106,17 @@ final class ClientCommandAdapter implements MessageHandler
                     final int streamId = subscriptionMsgFlyweight.streamId();
                     final String channel = subscriptionMsgFlyweight.channel();
 
-                    if (channel.startsWith(IPC_CHANNEL))
-                    {
+                    if (channel.startsWith(IPC_CHANNEL)) {
                         conductor.onAddIpcSubscription(channel, streamId, correlationId, clientId);
-                    }
-                    else if (channel.startsWith(SPY_QUALIFIER))
-                    {
+                    } else if (channel.startsWith(SPY_QUALIFIER)) {
                         conductor.onAddSpySubscription(channel, streamId, correlationId, clientId);
-                    }
-                    else
-                    {
+                    } else {
                         conductor.onAddNetworkSubscription(channel, streamId, correlationId, clientId);
                     }
                     break;
                 }
 
-                case REMOVE_SUBSCRIPTION:
-                {
+                case REMOVE_SUBSCRIPTION: {
                     removeMsgFlyweight.wrap(buffer, index);
                     removeMsgFlyweight.validateLength(msgTypeId, length);
 
@@ -140,8 +125,7 @@ final class ClientCommandAdapter implements MessageHandler
                     break;
                 }
 
-                case ADD_DESTINATION:
-                {
+                case ADD_DESTINATION: {
                     destinationMsgFlyweight.wrap(buffer, index);
                     destinationMsgFlyweight.validateLength(msgTypeId, length);
 
@@ -153,8 +137,7 @@ final class ClientCommandAdapter implements MessageHandler
                     break;
                 }
 
-                case REMOVE_DESTINATION:
-                {
+                case REMOVE_DESTINATION: {
                     destinationMsgFlyweight.wrap(buffer, index);
                     destinationMsgFlyweight.validateLength(msgTypeId, length);
 
@@ -166,8 +149,7 @@ final class ClientCommandAdapter implements MessageHandler
                     break;
                 }
 
-                case CLIENT_KEEPALIVE:
-                {
+                case CLIENT_KEEPALIVE: {
                     correlatedMsgFlyweight.wrap(buffer, index);
                     correlatedMsgFlyweight.validateLength(msgTypeId, length);
 
@@ -175,28 +157,26 @@ final class ClientCommandAdapter implements MessageHandler
                     break;
                 }
 
-                case ADD_COUNTER:
-                {
+                case ADD_COUNTER: {
                     counterMsgFlyweight.wrap(buffer, index);
                     counterMsgFlyweight.validateLength(msgTypeId, length);
 
                     correlationId = counterMsgFlyweight.correlationId();
                     final long clientId = counterMsgFlyweight.clientId();
                     conductor.onAddCounter(
-                        counterMsgFlyweight.typeId(),
-                        buffer,
-                        index + counterMsgFlyweight.keyBufferOffset(),
-                        counterMsgFlyweight.keyBufferLength(),
-                        buffer,
-                        index + counterMsgFlyweight.labelBufferOffset(),
-                        counterMsgFlyweight.labelBufferLength(),
-                        correlationId,
-                        clientId);
+                            counterMsgFlyweight.typeId(),
+                            buffer,
+                            index + counterMsgFlyweight.keyBufferOffset(),
+                            counterMsgFlyweight.keyBufferLength(),
+                            buffer,
+                            index + counterMsgFlyweight.labelBufferOffset(),
+                            counterMsgFlyweight.labelBufferLength(),
+                            correlationId,
+                            clientId);
                     break;
                 }
 
-                case REMOVE_COUNTER:
-                {
+                case REMOVE_COUNTER: {
                     removeMsgFlyweight.wrap(buffer, index);
                     removeMsgFlyweight.validateLength(msgTypeId, length);
 
@@ -205,8 +185,7 @@ final class ClientCommandAdapter implements MessageHandler
                     break;
                 }
 
-                case CLIENT_CLOSE:
-                {
+                case CLIENT_CLOSE: {
                     correlatedMsgFlyweight.wrap(buffer, index);
                     correlatedMsgFlyweight.validateLength(msgTypeId, length);
 
@@ -214,8 +193,7 @@ final class ClientCommandAdapter implements MessageHandler
                     break;
                 }
 
-                case ADD_RCV_DESTINATION:
-                {
+                case ADD_RCV_DESTINATION: {
                     destinationMsgFlyweight.wrap(buffer, index);
                     destinationMsgFlyweight.validateLength(msgTypeId, length);
 
@@ -227,8 +205,7 @@ final class ClientCommandAdapter implements MessageHandler
                     break;
                 }
 
-                case REMOVE_RCV_DESTINATION:
-                {
+                case REMOVE_RCV_DESTINATION: {
                     destinationMsgFlyweight.wrap(buffer, index);
                     destinationMsgFlyweight.validateLength(msgTypeId, length);
 
@@ -240,62 +217,50 @@ final class ClientCommandAdapter implements MessageHandler
                     break;
                 }
 
-                case TERMINATE_DRIVER:
-                {
+                case TERMINATE_DRIVER: {
                     terminateDriverFlyweight.wrap(buffer, index);
                     terminateDriverFlyweight.validateLength(msgTypeId, length);
 
                     conductor.onTerminateDriver(
-                        buffer,
-                        terminateDriverFlyweight.tokenBufferOffset(),
-                        terminateDriverFlyweight.tokenBufferLength());
+                            buffer,
+                            terminateDriverFlyweight.tokenBufferOffset(),
+                            terminateDriverFlyweight.tokenBufferLength());
                     break;
                 }
 
-                default:
-                {
+                default: {
                     final ControlProtocolException ex = new ControlProtocolException(
-                        ErrorCode.UNKNOWN_COMMAND_TYPE_ID,
-                        "command typeId=" + msgTypeId + " unknown, correlationId=" + correlationId);
+                            ErrorCode.UNKNOWN_COMMAND_TYPE_ID,
+                            "command typeId=" + msgTypeId + " unknown, correlationId=" + correlationId);
 
                     clientProxy.onError(correlationId, ex.errorCode(), ex.getMessage());
                     recordError(ex);
                 }
             }
-        }
-        catch (final ControlProtocolException ex)
-        {
+        } catch (final ControlProtocolException ex) {
             clientProxy.onError(correlationId, ex.errorCode(), ex.getMessage());
             recordError(ex);
-        }
-        catch (final Exception ex)
-        {
+        } catch (final Exception ex) {
             final String errorMessage = ex.getClass().getSimpleName() + " : " + ex.getMessage();
             clientProxy.onError(correlationId, GENERIC_ERROR, errorMessage);
             recordError(ex);
         }
     }
 
-    private void addPublication(final long correlationId, final boolean isExclusive)
-    {
+    private void addPublication(final long correlationId, final boolean isExclusive) {
         final long clientId = publicationMsgFlyweight.clientId();
         final int streamId = publicationMsgFlyweight.streamId();
         final String channel = publicationMsgFlyweight.channel();
 
-        if (channel.startsWith(IPC_CHANNEL))
-        {
+        if (channel.startsWith(IPC_CHANNEL)) {
             conductor.onAddIpcPublication(channel, streamId, correlationId, clientId, isExclusive);
-        }
-        else
-        {
+        } else {
             conductor.onAddNetworkPublication(channel, streamId, correlationId, clientId, isExclusive);
         }
     }
 
-    private void recordError(final Exception ex)
-    {
-        if (!errors.isClosed())
-        {
+    private void recordError(final Exception ex) {
+        if (!errors.isClosed()) {
             errors.increment();
         }
 

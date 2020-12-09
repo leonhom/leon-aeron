@@ -54,16 +54,18 @@ import static org.agrona.SystemUtil.*;
 
 /**
  * Configuration options for the {@link MediaDriver}.
+ * {@link MediaDriver}的配置选项。
  */
-public class Configuration
-{
+public class Configuration {
     /**
      * Should the driver print its configuration on start to {@link System#out}.
+     * 驱动程序是否应该在启动时将其配置打印到{@link System#out}。
      */
     public static final String PRINT_CONFIGURATION_ON_START_PROP_NAME = "aeron.print.configuration";
 
     /**
      * Warn if the Aeron directory exists.
+     * 如果Aeron目录存在，则发出警告。
      */
     public static final String DIR_WARN_IF_EXISTS_PROP_NAME = "aeron.dir.warn.if.exists";
 
@@ -110,6 +112,7 @@ public class Configuration
 
     /**
      * Default page size for alignment of all files.
+     * 所有文件对齐的默认页面大小。
      */
     public static final int FILE_PAGE_SIZE_DEFAULT = 4 * 1024;
 
@@ -309,7 +312,7 @@ public class Configuration
      * Property name for window limit for IPC publications.
      */
     public static final String IPC_PUBLICATION_TERM_WINDOW_LENGTH_PROP_NAME =
-        "aeron.ipc.publication.term.window.length";
+            "aeron.ipc.publication.term.window.length";
 
     /**
      * {@link Publication} unblock timeout due to client crash or untimely commit.
@@ -411,7 +414,7 @@ public class Configuration
      * {@link FlowControl} to be employed for unicast channels.
      */
     public static final String UNICAST_FLOW_CONTROL_STRATEGY = getProperty(
-        UNICAST_FLOW_CONTROL_STRATEGY_PROP_NAME, "io.aeron.driver.UnicastFlowControl");
+            UNICAST_FLOW_CONTROL_STRATEGY_PROP_NAME, "io.aeron.driver.UnicastFlowControl");
 
     /**
      * Property name for {@link FlowControl} to be employed for multicast channels.
@@ -422,7 +425,7 @@ public class Configuration
      * {@link FlowControl} to be employed for multicast channels.
      */
     public static final String MULTICAST_FLOW_CONTROL_STRATEGY = getProperty(
-        MULTICAST_FLOW_CONTROL_STRATEGY_PROP_NAME, "io.aeron.driver.MaxMulticastFlowControl");
+            MULTICAST_FLOW_CONTROL_STRATEGY_PROP_NAME, "io.aeron.driver.MaxMulticastFlowControl");
 
     /**
      * Property name for {@link FlowControlSupplier} to be employed for unicast channels.
@@ -433,7 +436,7 @@ public class Configuration
      * Property name for {@link FlowControlSupplier} to be employed for unicast channels.
      */
     public static final String MULTICAST_FLOW_CONTROL_STRATEGY_SUPPLIER_PROP_NAME =
-        "aeron.multicast.FlowControl.supplier";
+            "aeron.multicast.FlowControl.supplier";
 
     /**
      * Maximum UDP datagram payload size for IPv4. Jumbo datagrams from IPv6 are not supported.
@@ -505,7 +508,7 @@ public class Configuration
      */
     @Deprecated
     public static final String SM_APPLICATION_SPECIFIC_FEEDBACK_PROP_NAME =
-        "aeron.flow.control.sm.applicationSpecificFeedback";
+            "aeron.flow.control.sm.applicationSpecificFeedback";
 
     /**
      * Property name for {@link CongestionControlSupplier} to be employed for receivers.
@@ -516,7 +519,7 @@ public class Configuration
      * Property name for low end of the publication reserved session-id range which will not be automatically assigned.
      */
     public static final String PUBLICATION_RESERVED_SESSION_ID_LOW_PROP_NAME =
-        "aeron.publication.reserved.session.id.low";
+            "aeron.publication.reserved.session.id.low";
 
     /**
      * Low-end of the publication reserved session-id range which will not be automatically assigned.
@@ -527,7 +530,7 @@ public class Configuration
      * High-end of the publication reserved session-id range which will not be automatically assigned.
      */
     public static final String PUBLICATION_RESERVED_SESSION_ID_HIGH_PROP_NAME =
-        "aeron.publication.reserved.session.id.high";
+            "aeron.publication.reserved.session.id.high";
 
     /**
      * High-end of the publication reserved session-id range which will not be automatically assigned.
@@ -663,7 +666,7 @@ public class Configuration
      * connectivity.
      */
     public static final String FLOW_CONTROL_GROUP_MIN_SIZE_PROP_NAME =
-        "aeron.flow.control.group.min.size";
+            "aeron.flow.control.group.min.size";
 
     /**
      * Default value for the receiver timeout used to determine if the receiver should still be monitored for
@@ -677,7 +680,7 @@ public class Configuration
     public static final String FLOW_CONTROL_RECEIVER_TIMEOUT_PROP_NAME = "aeron.flow.control.receiver.timeout";
 
     private static final String MIN_FLOW_CONTROL_TIMEOUT_OLD_PROP_NAME =
-        "aeron.MinMulticastFlowControl.receiverTimeout";
+            "aeron.MinMulticastFlowControl.receiverTimeout";
 
     /**
      * Property name for resolver name of the Media Driver used in name resolution.
@@ -686,12 +689,14 @@ public class Configuration
 
     /**
      * Property name for resolver interface to which network connections are made.
+     *
      * @see #RESOLVER_BOOTSTRAP_NEIGHBOR_PROP_NAME
      */
     public static final String RESOLVER_INTERFACE_PROP_NAME = "aeron.driver.resolver.interface";
 
     /**
      * Property name for resolver bootstrap neighbor for which it can bootstrap naming, format is hostname:port.
+     *
      * @see #RESOLVER_INTERFACE_PROP_NAME
      */
     public static final String RESOLVER_BOOTSTRAP_NEIGHBOR_PROP_NAME = "aeron.driver.resolver.bootstrap.neighbor";
@@ -712,8 +717,7 @@ public class Configuration
      * @return true if the driver configuration be printed on start.
      * @see #PRINT_CONFIGURATION_ON_START_PROP_NAME
      */
-    public static boolean printConfigurationOnStart()
-    {
+    public static boolean printConfigurationOnStart() {
         return "true".equalsIgnoreCase(getProperty(PRINT_CONFIGURATION_ON_START_PROP_NAME, "false"));
     }
 
@@ -723,8 +727,7 @@ public class Configuration
      * @return true if the high-resolution timer be used when running on Windows.
      * @see #USE_WINDOWS_HIGH_RES_TIMER_PROP_NAME
      */
-    public static boolean useWindowsHighResTimer()
-    {
+    public static boolean useWindowsHighResTimer() {
         return "true".equalsIgnoreCase(getProperty(USE_WINDOWS_HIGH_RES_TIMER_PROP_NAME, "false"));
     }
 
@@ -734,8 +737,7 @@ public class Configuration
      * @return true if a warning be printed if the aeron directory exist when starting.
      * @see #DIR_WARN_IF_EXISTS_PROP_NAME
      */
-    public static boolean warnIfDirExists()
-    {
+    public static boolean warnIfDirExists() {
         return "true".equalsIgnoreCase(getProperty(DIR_WARN_IF_EXISTS_PROP_NAME, "false"));
     }
 
@@ -746,8 +748,7 @@ public class Configuration
      * @return true if the aeron directory be deleted on start without checking if active.
      * @see #DIR_DELETE_ON_START_PROP_NAME
      */
-    public static boolean dirDeleteOnStart()
-    {
+    public static boolean dirDeleteOnStart() {
         return "true".equalsIgnoreCase(getProperty(DIR_DELETE_ON_START_PROP_NAME, "false"));
     }
 
@@ -757,8 +758,7 @@ public class Configuration
      * @return true if driver should attempt to delete {@link CommonContext#AERON_DIR_PROP_NAME} on shutdown.
      * @see #DIR_DELETE_ON_SHUTDOWN_PROP_NAME
      */
-    public static boolean dirDeleteOnShutdown()
-    {
+    public static boolean dirDeleteOnShutdown() {
         return "true".equalsIgnoreCase(getProperty(DIR_DELETE_ON_SHUTDOWN_PROP_NAME, "false"));
     }
 
@@ -768,8 +768,7 @@ public class Configuration
      * @return true if term buffers should be created as sparse files.
      * @see #TERM_BUFFER_SPARSE_FILE_PROP_NAME
      */
-    public static boolean termBufferSparseFile()
-    {
+    public static boolean termBufferSparseFile() {
         return "true".equalsIgnoreCase(getProperty(TERM_BUFFER_SPARSE_FILE_PROP_NAME, "false"));
     }
 
@@ -779,8 +778,7 @@ public class Configuration
      * @return true if the default subscriptions should be tethered.
      * @see #TETHER_SUBSCRIPTIONS_PROP_NAME
      */
-    public static boolean tetherSubscriptions()
-    {
+    public static boolean tetherSubscriptions() {
         return "true".equalsIgnoreCase(getProperty(TETHER_SUBSCRIPTIONS_PROP_NAME, "true"));
     }
 
@@ -790,8 +788,7 @@ public class Configuration
      * @return true if NAK is default or false to gap fill.
      * @see #RELIABLE_STREAM_PROP_NAME
      */
-    public static boolean reliableStream()
-    {
+    public static boolean reliableStream() {
         return "true".equalsIgnoreCase(getProperty(RELIABLE_STREAM_PROP_NAME, "true"));
     }
 
@@ -801,8 +798,7 @@ public class Configuration
      * @return true of storage checks should be performed before allocating files.
      * @see #PERFORM_STORAGE_CHECKS_PROP_NAME
      */
-    public static boolean performStorageChecks()
-    {
+    public static boolean performStorageChecks() {
         return "true".equalsIgnoreCase(getProperty(PERFORM_STORAGE_CHECKS_PROP_NAME, "true"));
     }
 
@@ -810,11 +806,11 @@ public class Configuration
      * Should spy subscriptions simulate a connection to a network publication.
      * <p>
      * If true then this will override the min group size of the min and tagged flow control strategies.
+     *
      * @return true if spy subscriptions should simulate a connection to a network publication.
      * @see #SPIES_SIMULATE_CONNECTION_PROP_NAME
      */
-    public static boolean spiesSimulateConnection()
-    {
+    public static boolean spiesSimulateConnection() {
         return "true".equalsIgnoreCase(getProperty(SPIES_SIMULATE_CONNECTION_PROP_NAME, "false"));
     }
 
@@ -824,8 +820,7 @@ public class Configuration
      * @return true if subscriptions should be considered a group member or false if individual.
      * @see #GROUP_RECEIVER_CONSIDERATION_PROP_NAME
      */
-    public static CommonContext.InferableBoolean receiverGroupConsideration()
-    {
+    public static CommonContext.InferableBoolean receiverGroupConsideration() {
         return CommonContext.InferableBoolean.parse(getProperty(GROUP_RECEIVER_CONSIDERATION_PROP_NAME));
     }
 
@@ -835,8 +830,7 @@ public class Configuration
      * @return length (in bytes) of the conductor buffer for control commands from the clients to the media driver.
      * @see #CONDUCTOR_BUFFER_LENGTH_PROP_NAME
      */
-    public static int conductorBufferLength()
-    {
+    public static int conductorBufferLength() {
         return getSizeAsInt(CONDUCTOR_BUFFER_LENGTH_PROP_NAME, CONDUCTOR_BUFFER_LENGTH_DEFAULT);
     }
 
@@ -846,8 +840,7 @@ public class Configuration
      * @return length (in bytes) of the broadcast buffers from the media driver to the clients.
      * @see #TO_CLIENTS_BUFFER_LENGTH_PROP_NAME
      */
-    public static int toClientsBufferLength()
-    {
+    public static int toClientsBufferLength() {
         return getSizeAsInt(TO_CLIENTS_BUFFER_LENGTH_PROP_NAME, TO_CLIENTS_BUFFER_LENGTH_DEFAULT);
     }
 
@@ -859,8 +852,7 @@ public class Configuration
      * @return Length of the buffer for the counters.
      * @see #COUNTERS_VALUES_BUFFER_LENGTH_PROP_NAME
      */
-    public static int counterValuesBufferLength()
-    {
+    public static int counterValuesBufferLength() {
         return getSizeAsInt(COUNTERS_VALUES_BUFFER_LENGTH_PROP_NAME, COUNTERS_VALUES_BUFFER_LENGTH_DEFAULT);
     }
 
@@ -869,8 +861,7 @@ public class Configuration
      *
      * @return length of the memory mapped buffer for the distinct error log.
      */
-    public static int errorBufferLength()
-    {
+    public static int errorBufferLength() {
         return getSizeAsInt(ERROR_BUFFER_LENGTH_PROP_NAME, ERROR_BUFFER_LENGTH_DEFAULT);
     }
 
@@ -880,8 +871,7 @@ public class Configuration
      * @return expected size of typical multicast receiver groups.
      * @see #NAK_MULTICAST_GROUP_SIZE_PROP_NAME
      */
-    public static int nakMulticastGroupSize()
-    {
+    public static int nakMulticastGroupSize() {
         return getInteger(NAK_MULTICAST_GROUP_SIZE_PROP_NAME, NAK_MULTICAST_GROUP_SIZE_DEFAULT);
     }
 
@@ -891,8 +881,7 @@ public class Configuration
      * @return max backoff time for multicast NAK delay randomisation in nanoseconds.
      * @see #NAK_MULTICAST_MAX_BACKOFF_PROP_NAME
      */
-    public static long nakMulticastMaxBackoffNs()
-    {
+    public static long nakMulticastMaxBackoffNs() {
         return getDurationInNanos(NAK_MULTICAST_MAX_BACKOFF_PROP_NAME, NAK_MAX_BACKOFF_DEFAULT_NS);
     }
 
@@ -902,8 +891,7 @@ public class Configuration
      * @return unicast NAK delay in nanoseconds.
      * @see #NAK_UNICAST_DELAY_PROP_NAME
      */
-    public static long nakUnicastDelayNs()
-    {
+    public static long nakUnicastDelayNs() {
         return getDurationInNanos(NAK_UNICAST_DELAY_PROP_NAME, NAK_UNICAST_DELAY_DEFAULT_NS);
     }
 
@@ -913,8 +901,7 @@ public class Configuration
      * @return interval between checks for timers and timeouts.
      * @see #TIMER_INTERVAL_PROP_NAME
      */
-    public static long timerIntervalNs()
-    {
+    public static long timerIntervalNs() {
         return getDurationInNanos(TIMER_INTERVAL_PROP_NAME, DEFAULT_TIMER_INTERVAL_NS);
     }
 
@@ -925,8 +912,7 @@ public class Configuration
      * @see #LOW_FILE_STORE_WARNING_THRESHOLD_PROP_NAME
      * @see #PERFORM_STORAGE_CHECKS_PROP_NAME
      */
-    public static long lowStorageWarningThreshold()
-    {
+    public static long lowStorageWarningThreshold() {
         return getSizeAsLong(LOW_FILE_STORE_WARNING_THRESHOLD_PROP_NAME, LOW_FILE_STORE_WARNING_THRESHOLD_DEFAULT);
     }
 
@@ -936,8 +922,7 @@ public class Configuration
      * @return window limit on UDP {@link Publication} side by which the publisher can get ahead of consumers.
      * @see #PUBLICATION_TERM_WINDOW_LENGTH_PROP_NAME
      */
-    public static int publicationTermWindowLength()
-    {
+    public static int publicationTermWindowLength() {
         return getSizeAsInt(PUBLICATION_TERM_WINDOW_LENGTH_PROP_NAME, 0);
     }
 
@@ -947,8 +932,7 @@ public class Configuration
      * @return window limit on IPC {@link Publication} side by which the publisher can get ahead of consumers.
      * @see #IPC_PUBLICATION_TERM_WINDOW_LENGTH_PROP_NAME
      */
-    public static int ipcPublicationTermWindowLength()
-    {
+    public static int ipcPublicationTermWindowLength() {
         return getSizeAsInt(IPC_PUBLICATION_TERM_WINDOW_LENGTH_PROP_NAME, 0);
     }
 
@@ -961,10 +945,9 @@ public class Configuration
      * @see #UNTETHERED_RESTING_TIMEOUT_PROP_NAME
      * @see #TETHER_SUBSCRIPTIONS_PROP_NAME
      */
-    public static long untetheredWindowLimitTimeoutNs()
-    {
+    public static long untetheredWindowLimitTimeoutNs() {
         return getDurationInNanos(
-            UNTETHERED_WINDOW_LIMIT_TIMEOUT_PROP_NAME, UNTETHERED_WINDOW_LIMIT_TIMEOUT_DEFAULT_NS);
+                UNTETHERED_WINDOW_LIMIT_TIMEOUT_PROP_NAME, UNTETHERED_WINDOW_LIMIT_TIMEOUT_DEFAULT_NS);
     }
 
     /**
@@ -976,8 +959,7 @@ public class Configuration
      * @see #UNTETHERED_WINDOW_LIMIT_TIMEOUT_PROP_NAME
      * @see #TETHER_SUBSCRIPTIONS_PROP_NAME
      */
-    public static long untetheredRestingTimeoutNs()
-    {
+    public static long untetheredRestingTimeoutNs() {
         return getDurationInNanos(UNTETHERED_RESTING_TIMEOUT_PROP_NAME, UNTETHERED_RESTING_TIMEOUT_DEFAULT_NS);
     }
 
@@ -987,8 +969,7 @@ public class Configuration
      * @return boolean value for if a stream can be rejoined. True to allow rejoin, false to not.
      * @see #REJOIN_STREAM_PROP_NAME
      */
-    public static boolean rejoinStream()
-    {
+    public static boolean rejoinStream() {
         return "true".equalsIgnoreCase(getProperty(REJOIN_STREAM_PROP_NAME, "true"));
     }
 
@@ -998,8 +979,7 @@ public class Configuration
      * @return Default group tag (gtag) to send in all Status Messages.
      * @see #RECEIVER_GROUP_TAG_PROP_NAME
      */
-    public static Long groupTag()
-    {
+    public static Long groupTag() {
         return getLong(RECEIVER_GROUP_TAG_PROP_NAME, null);
     }
 
@@ -1010,10 +990,9 @@ public class Configuration
      * @see #FLOW_CONTROL_GROUP_TAG_PROP_NAME
      */
     @SuppressWarnings("deprecation")
-    public static long flowControlGroupTag()
-    {
+    public static long flowControlGroupTag() {
         final String propertyValue = getProperty(
-            PreferredMulticastFlowControl.PREFERRED_ASF_PROP_NAME, PreferredMulticastFlowControl.PREFERRED_ASF_DEFAULT);
+                PreferredMulticastFlowControl.PREFERRED_ASF_PROP_NAME, PreferredMulticastFlowControl.PREFERRED_ASF_DEFAULT);
         final long legacyAsfValue = new UnsafeBuffer(BitUtil.fromHex(propertyValue)).getLong(0, LITTLE_ENDIAN);
 
         return getLong(FLOW_CONTROL_GROUP_TAG_PROP_NAME, legacyAsfValue);
@@ -1025,8 +1004,7 @@ public class Configuration
      * @return default minimum group size used by flow control strategies to determine connectivity.
      * @see #FLOW_CONTROL_GROUP_MIN_SIZE_PROP_NAME
      */
-    public static int flowControlGroupMinSize()
-    {
+    public static int flowControlGroupMinSize() {
         return getInteger(FLOW_CONTROL_GROUP_MIN_SIZE_PROP_NAME, 0);
     }
 
@@ -1036,11 +1014,10 @@ public class Configuration
      * @return flow control timeout after which with no status messages the receiver is consider gone.
      * @see #FLOW_CONTROL_RECEIVER_TIMEOUT_PROP_NAME
      */
-    public static long flowControlReceiverTimeoutNs()
-    {
+    public static long flowControlReceiverTimeoutNs() {
         return getDurationInNanos(
-            FLOW_CONTROL_RECEIVER_TIMEOUT_PROP_NAME,
-            getDurationInNanos(MIN_FLOW_CONTROL_TIMEOUT_OLD_PROP_NAME, FLOW_CONTROL_RECEIVER_TIMEOUT_DEFAULT_NS));
+                FLOW_CONTROL_RECEIVER_TIMEOUT_PROP_NAME,
+                getDurationInNanos(MIN_FLOW_CONTROL_TIMEOUT_OLD_PROP_NAME, FLOW_CONTROL_RECEIVER_TIMEOUT_DEFAULT_NS));
     }
 
     /**
@@ -1049,8 +1026,7 @@ public class Configuration
      * @return resolver name of the Media Driver used in name resolution.
      * @see #RESOLVER_NAME_PROP_NAME
      */
-    public static String resolverName()
-    {
+    public static String resolverName() {
         return getProperty(RESOLVER_NAME_PROP_NAME);
     }
 
@@ -1060,8 +1036,7 @@ public class Configuration
      * @return resolver interface to which network connections are made, format is hostname:port.
      * @see #RESOLVER_INTERFACE_PROP_NAME
      */
-    public static String resolverInterface()
-    {
+    public static String resolverInterface() {
         return getProperty(RESOLVER_INTERFACE_PROP_NAME);
     }
 
@@ -1072,8 +1047,7 @@ public class Configuration
      * @see #RESOLVER_BOOTSTRAP_NEIGHBOR_PROP_NAME
      * @see #RESOLVER_INTERFACE_PROP_NAME
      */
-    public static String resolverBootstrapNeighbor()
-    {
+    public static String resolverBootstrapNeighbor() {
         return getProperty(RESOLVER_BOOTSTRAP_NEIGHBOR_PROP_NAME);
     }
 
@@ -1083,8 +1057,7 @@ public class Configuration
      * @return re-resolution check interval for resolving names to IP address when they may have changed.
      * @see #RE_RESOLUTION_CHECK_INTERVAL_PROP_NAME
      */
-    public static long reResolutionCheckIntervalNs()
-    {
+    public static long reResolutionCheckIntervalNs() {
         return getDurationInNanos(RE_RESOLUTION_CHECK_INTERVAL_PROP_NAME, RE_RESOLUTION_CHECK_INTERVAL_DEFAULT_NS);
     }
 
@@ -1095,12 +1068,10 @@ public class Configuration
      * @param defaultTermWindowLength to take priority.
      * @return the length to be used for the producer window.
      */
-    public static int producerWindowLength(final int termBufferLength, final int defaultTermWindowLength)
-    {
+    public static int producerWindowLength(final int termBufferLength, final int defaultTermWindowLength) {
         int termWindowLength = termBufferLength >> 1;
 
-        if (0 != defaultTermWindowLength)
-        {
+        if (0 != defaultTermWindowLength) {
             termWindowLength = Math.min(defaultTermWindowLength, termWindowLength);
         }
 
@@ -1113,8 +1084,7 @@ public class Configuration
      * @return length (in bytes) of the log buffers for UDP publication terms.
      * @see #TERM_BUFFER_LENGTH_PROP_NAME
      */
-    public static int termBufferLength()
-    {
+    public static int termBufferLength() {
         return getSizeAsInt(TERM_BUFFER_LENGTH_PROP_NAME, TERM_BUFFER_LENGTH_DEFAULT);
     }
 
@@ -1124,8 +1094,7 @@ public class Configuration
      * @return length (in bytes) of the log buffers for IPC publication terms.
      * @see #IPC_TERM_BUFFER_LENGTH_PROP_NAME
      */
-    public static int ipcTermBufferLength()
-    {
+    public static int ipcTermBufferLength() {
         return getSizeAsInt(IPC_TERM_BUFFER_LENGTH_PROP_NAME, TERM_BUFFER_IPC_LENGTH_DEFAULT);
     }
 
@@ -1135,8 +1104,7 @@ public class Configuration
      * @return length of the initial window which must be sufficient for Bandwidth Delay Product (BDP).
      * @see #INITIAL_WINDOW_LENGTH_PROP_NAME
      */
-    public static int initialWindowLength()
-    {
+    public static int initialWindowLength() {
         return getSizeAsInt(INITIAL_WINDOW_LENGTH_PROP_NAME, INITIAL_WINDOW_LENGTH_DEFAULT);
     }
 
@@ -1146,8 +1114,7 @@ public class Configuration
      * @return SO_SNDBUF setting on UDP sockets which must be sufficient for Bandwidth Delay Product (BDP).
      * @see #SOCKET_SNDBUF_LENGTH_PROP_NAME
      */
-    public static int socketSndbufLength()
-    {
+    public static int socketSndbufLength() {
         return getSizeAsInt(SOCKET_SNDBUF_LENGTH_PROP_NAME, SOCKET_SNDBUF_LENGTH_DEFAULT);
     }
 
@@ -1157,8 +1124,7 @@ public class Configuration
      * @return SO_RCVBUF setting on UDP sockets which must be sufficient for Bandwidth Delay Product (BDP).
      * @see #SOCKET_RCVBUF_LENGTH_PROP_NAME
      */
-    public static int socketRcvbufLength()
-    {
+    public static int socketRcvbufLength() {
         return getSizeAsInt(SOCKET_RCVBUF_LENGTH_PROP_NAME, SOCKET_RCVBUF_LENGTH_DEFAULT);
     }
 
@@ -1169,8 +1135,7 @@ public class Configuration
      * @return length of the maximum transmission unit of the media driver's protocol.
      * @see #MTU_LENGTH_PROP_NAME
      */
-    public static int mtuLength()
-    {
+    public static int mtuLength() {
         return getSizeAsInt(MTU_LENGTH_PROP_NAME, MTU_LENGTH_DEFAULT);
     }
 
@@ -1181,8 +1146,7 @@ public class Configuration
      * @return length of the maximum transmission unit of the media driver's protocol for IPC.
      * @see #IPC_MTU_LENGTH_PROP_NAME
      */
-    public static int ipcMtuLength()
-    {
+    public static int ipcMtuLength() {
         return getSizeAsInt(IPC_MTU_LENGTH_PROP_NAME, MTU_LENGTH_DEFAULT);
     }
 
@@ -1192,8 +1156,7 @@ public class Configuration
      * @return IP_MULTICAST_TTL setting on UDP sockets.
      * @see #SOCKET_MULTICAST_TTL_PROP_NAME
      */
-    public static int socketMulticastTtl()
-    {
+    public static int socketMulticastTtl() {
         return getInteger(SOCKET_MULTICAST_TTL_PROP_NAME, SOCKET_MULTICAST_TTL_DEFAULT);
     }
 
@@ -1203,8 +1166,7 @@ public class Configuration
      * @return page size in bytes to align all files to.
      * @see #FILE_PAGE_SIZE_PROP_NAME
      */
-    public static int filePageSize()
-    {
+    public static int filePageSize() {
         return getSizeAsInt(FILE_PAGE_SIZE_PROP_NAME, FILE_PAGE_SIZE_DEFAULT);
     }
 
@@ -1214,8 +1176,7 @@ public class Configuration
      * @return low-end of the publication reserved session-id range which will not be automatically assigned.
      * @see #PUBLICATION_RESERVED_SESSION_ID_LOW_PROP_NAME
      */
-    public static int publicationReservedSessionIdLow()
-    {
+    public static int publicationReservedSessionIdLow() {
         return getInteger(PUBLICATION_RESERVED_SESSION_ID_LOW_PROP_NAME, PUBLICATION_RESERVED_SESSION_ID_LOW_DEFAULT);
     }
 
@@ -1225,8 +1186,7 @@ public class Configuration
      * @return high-end of the publication reserved session-id range which will not be automatically assigned.
      * @see #PUBLICATION_RESERVED_SESSION_ID_HIGH_PROP_NAME
      */
-    public static int publicationReservedSessionIdHigh()
-    {
+    public static int publicationReservedSessionIdHigh() {
         return getInteger(PUBLICATION_RESERVED_SESSION_ID_HIGH_PROP_NAME, PUBLICATION_RESERVED_SESSION_ID_HIGH_DEFAULT);
     }
 
@@ -1236,8 +1196,7 @@ public class Configuration
      * @return status message timeout in nanoseconds after which one will be sent.
      * @see #STATUS_MESSAGE_TIMEOUT_PROP_NAME
      */
-    public static long statusMessageTimeoutNs()
-    {
+    public static long statusMessageTimeoutNs() {
         return getDurationInNanos(STATUS_MESSAGE_TIMEOUT_PROP_NAME, STATUS_MESSAGE_TIMEOUT_DEFAULT_NS);
     }
 
@@ -1247,8 +1206,7 @@ public class Configuration
      * @return ratio of sending data to polling status messages in the {@link Sender}.
      * @see #SEND_TO_STATUS_POLL_RATIO_PROP_NAME
      */
-    public static int sendToStatusMessagePollRatio()
-    {
+    public static int sendToStatusMessagePollRatio() {
         return getInteger(SEND_TO_STATUS_POLL_RATIO_PROP_NAME, SEND_TO_STATUS_POLL_RATIO_DEFAULT);
     }
 
@@ -1258,8 +1216,7 @@ public class Configuration
      * @return timeout between a counter being freed and being available to be reused.
      * @see #COUNTER_FREE_TO_REUSE_TIMEOUT_PROP_NAME
      */
-    public static long counterFreeToReuseTimeoutNs()
-    {
+    public static long counterFreeToReuseTimeoutNs() {
         return getDurationInNanos(COUNTER_FREE_TO_REUSE_TIMEOUT_PROP_NAME, DEFAULT_COUNTER_FREE_TO_REUSE_TIMEOUT_NS);
     }
 
@@ -1269,8 +1226,7 @@ public class Configuration
      * @return {@link Aeron} client liveness timeout after which it is considered not alive.
      * @see #CLIENT_LIVENESS_TIMEOUT_PROP_NAME
      */
-    public static long clientLivenessTimeoutNs()
-    {
+    public static long clientLivenessTimeoutNs() {
         return getDurationInNanos(CLIENT_LIVENESS_TIMEOUT_PROP_NAME, CLIENT_LIVENESS_TIMEOUT_DEFAULT_NS);
     }
 
@@ -1282,8 +1238,7 @@ public class Configuration
      * being drained.
      * @see #IMAGE_LIVENESS_TIMEOUT_PROP_NAME
      */
-    public static long imageLivenessTimeoutNs()
-    {
+    public static long imageLivenessTimeoutNs() {
         return getDurationInNanos(IMAGE_LIVENESS_TIMEOUT_PROP_NAME, IMAGE_LIVENESS_TIMEOUT_DEFAULT_NS);
     }
 
@@ -1297,8 +1252,7 @@ public class Configuration
      * @return {@link Publication} unblock timeout due to client crash or untimely commit.
      * @see #PUBLICATION_UNBLOCK_TIMEOUT_PROP_NAME
      */
-    public static long publicationUnblockTimeoutNs()
-    {
+    public static long publicationUnblockTimeoutNs() {
         return getDurationInNanos(PUBLICATION_UNBLOCK_TIMEOUT_PROP_NAME, PUBLICATION_UNBLOCK_TIMEOUT_DEFAULT_NS);
     }
 
@@ -1308,8 +1262,7 @@ public class Configuration
      * @return {@link Publication} timeout due to lack of status messages which indicate a connection.
      * @see #PUBLICATION_CONNECTION_TIMEOUT_PROP_NAME
      */
-    public static long publicationConnectionTimeoutNs()
-    {
+    public static long publicationConnectionTimeoutNs() {
         return getDurationInNanos(PUBLICATION_CONNECTION_TIMEOUT_PROP_NAME, PUBLICATION_CONNECTION_TIMEOUT_DEFAULT_NS);
     }
 
@@ -1319,8 +1272,7 @@ public class Configuration
      * @return linger timeout after draining on {@link Publication}s so they can respond to NAKs.
      * @see #PUBLICATION_LINGER_PROP_NAME
      */
-    public static long publicationLingerTimeoutNs()
-    {
+    public static long publicationLingerTimeoutNs() {
         return getDurationInNanos(PUBLICATION_LINGER_PROP_NAME, PUBLICATION_LINGER_DEFAULT_NS);
     }
 
@@ -1330,8 +1282,7 @@ public class Configuration
      * @return setting how long to delay before sending a retransmit after receiving a NAK.
      * @see #RETRANSMIT_UNICAST_DELAY_PROP_NAME
      */
-    public static long retransmitUnicastDelayNs()
-    {
+    public static long retransmitUnicastDelayNs() {
         return getDurationInNanos(RETRANSMIT_UNICAST_DELAY_PROP_NAME, RETRANSMIT_UNICAST_DELAY_DEFAULT_NS);
     }
 
@@ -1341,8 +1292,7 @@ public class Configuration
      * @return setting how long to linger after delay on a NAK before responding to another NAK.
      * @see #RETRANSMIT_UNICAST_LINGER_PROP_NAME
      */
-    public static long retransmitUnicastLingerNs()
-    {
+    public static long retransmitUnicastLingerNs() {
         return getDurationInNanos(RETRANSMIT_UNICAST_LINGER_PROP_NAME, RETRANSMIT_UNICAST_LINGER_DEFAULT_NS);
     }
 
@@ -1352,8 +1302,7 @@ public class Configuration
      * @return length of the memory mapped buffer for the {@link io.aeron.driver.reports.LossReport}.
      * @see #LOSS_REPORT_BUFFER_LENGTH_PROP_NAME
      */
-    public static int lossReportBufferLength()
-    {
+    public static int lossReportBufferLength() {
         return getSizeAsInt(LOSS_REPORT_BUFFER_LENGTH_PROP_NAME, LOSS_REPORT_BUFFER_LENGTH_DEFAULT);
     }
 
@@ -1364,11 +1313,9 @@ public class Configuration
      * @return {@link ThreadingMode} to be used by the Aeron {@link MediaDriver}.
      * @see #THREADING_MODE_PROP_NAME
      */
-    public static ThreadingMode threadingMode()
-    {
+    public static ThreadingMode threadingMode() {
         final String propertyValue = getProperty(THREADING_MODE_PROP_NAME);
-        if (null == propertyValue)
-        {
+        if (null == propertyValue) {
             return DEDICATED;
         }
 
@@ -1382,12 +1329,10 @@ public class Configuration
      * @param controllableStatus status indicator for what the strategy should do.
      * @return the newly created IdleStrategy.
      */
-    public static IdleStrategy agentIdleStrategy(final String strategyName, final StatusIndicator controllableStatus)
-    {
+    public static IdleStrategy agentIdleStrategy(final String strategyName, final StatusIndicator controllableStatus) {
         IdleStrategy idleStrategy = null;
 
-        switch (strategyName)
-        {
+        switch (strategyName) {
             case NoOpIdleStrategy.ALIAS:
             case "org.agrona.concurrent.NoOpIdleStrategy":
                 idleStrategy = NoOpIdleStrategy.INSTANCE;
@@ -1416,7 +1361,7 @@ public class Configuration
             case BackoffIdleStrategy.ALIAS:
             case DEFAULT_IDLE_STRATEGY:
                 idleStrategy = new BackoffIdleStrategy(
-                    IDLE_MAX_SPINS, IDLE_MAX_YIELDS, IDLE_MIN_PARK_NS, IDLE_MAX_PARK_NS);
+                        IDLE_MAX_SPINS, IDLE_MAX_YIELDS, IDLE_MIN_PARK_NS, IDLE_MAX_PARK_NS);
                 break;
 
             case ControllableIdleStrategy.ALIAS:
@@ -1427,12 +1372,9 @@ public class Configuration
                 break;
 
             default:
-                try
-                {
-                    idleStrategy = (IdleStrategy)Class.forName(strategyName).getConstructor().newInstance();
-                }
-                catch (final Exception ex)
-                {
+                try {
+                    idleStrategy = (IdleStrategy) Class.forName(strategyName).getConstructor().newInstance();
+                } catch (final Exception ex) {
                     LangUtil.rethrowUnchecked(ex);
                 }
                 break;
@@ -1448,10 +1390,9 @@ public class Configuration
      * @return {@link IdleStrategy} to be employed by {@link Sender} for {@link ThreadingMode#DEDICATED}.
      * @see #SENDER_IDLE_STRATEGY_PROP_NAME
      */
-    public static IdleStrategy senderIdleStrategy(final StatusIndicator controllableStatus)
-    {
+    public static IdleStrategy senderIdleStrategy(final StatusIndicator controllableStatus) {
         return agentIdleStrategy(
-            getProperty(SENDER_IDLE_STRATEGY_PROP_NAME, DEFAULT_IDLE_STRATEGY), controllableStatus);
+                getProperty(SENDER_IDLE_STRATEGY_PROP_NAME, DEFAULT_IDLE_STRATEGY), controllableStatus);
     }
 
     /**
@@ -1461,10 +1402,9 @@ public class Configuration
      * @return {@link IdleStrategy} to be employed by {@link Receiver} for {@link ThreadingMode#DEDICATED}.
      * @see #RECEIVER_IDLE_STRATEGY_PROP_NAME
      */
-    public static IdleStrategy receiverIdleStrategy(final StatusIndicator controllableStatus)
-    {
+    public static IdleStrategy receiverIdleStrategy(final StatusIndicator controllableStatus) {
         return agentIdleStrategy(
-            getProperty(RECEIVER_IDLE_STRATEGY_PROP_NAME, DEFAULT_IDLE_STRATEGY), controllableStatus);
+                getProperty(RECEIVER_IDLE_STRATEGY_PROP_NAME, DEFAULT_IDLE_STRATEGY), controllableStatus);
     }
 
     /**
@@ -1476,10 +1416,9 @@ public class Configuration
      * and {@link ThreadingMode#SHARED_NETWORK}..
      * @see #CONDUCTOR_IDLE_STRATEGY_PROP_NAME
      */
-    public static IdleStrategy conductorIdleStrategy(final StatusIndicator controllableStatus)
-    {
+    public static IdleStrategy conductorIdleStrategy(final StatusIndicator controllableStatus) {
         return agentIdleStrategy(
-            getProperty(CONDUCTOR_IDLE_STRATEGY_PROP_NAME, DEFAULT_IDLE_STRATEGY), controllableStatus);
+                getProperty(CONDUCTOR_IDLE_STRATEGY_PROP_NAME, DEFAULT_IDLE_STRATEGY), controllableStatus);
     }
 
     /**
@@ -1491,10 +1430,9 @@ public class Configuration
      * {@link ThreadingMode#SHARED_NETWORK}.
      * @see #SHARED_NETWORK_IDLE_STRATEGY_PROP_NAME
      */
-    public static IdleStrategy sharedNetworkIdleStrategy(final StatusIndicator controllableStatus)
-    {
+    public static IdleStrategy sharedNetworkIdleStrategy(final StatusIndicator controllableStatus) {
         return agentIdleStrategy(
-            getProperty(SHARED_NETWORK_IDLE_STRATEGY_PROP_NAME, DEFAULT_IDLE_STRATEGY), controllableStatus);
+                getProperty(SHARED_NETWORK_IDLE_STRATEGY_PROP_NAME, DEFAULT_IDLE_STRATEGY), controllableStatus);
     }
 
     /**
@@ -1506,10 +1444,9 @@ public class Configuration
      * {@link ThreadingMode#SHARED}.
      * @see #SHARED_IDLE_STRATEGY_PROP_NAME
      */
-    public static IdleStrategy sharedIdleStrategy(final StatusIndicator controllableStatus)
-    {
+    public static IdleStrategy sharedIdleStrategy(final StatusIndicator controllableStatus) {
         return agentIdleStrategy(
-            getProperty(SHARED_IDLE_STRATEGY_PROP_NAME, DEFAULT_IDLE_STRATEGY), controllableStatus);
+                getProperty(SHARED_IDLE_STRATEGY_PROP_NAME, DEFAULT_IDLE_STRATEGY), controllableStatus);
     }
 
     /**
@@ -1518,11 +1455,9 @@ public class Configuration
      * @deprecated see {@link #groupTag()}.
      */
     @Deprecated
-    public static byte[] applicationSpecificFeedback()
-    {
+    public static byte[] applicationSpecificFeedback() {
         final String propertyValue = getProperty(SM_APPLICATION_SPECIFIC_FEEDBACK_PROP_NAME);
-        if (null == propertyValue)
-        {
+        if (null == propertyValue) {
             return ArrayUtil.EMPTY_BYTE_ARRAY;
         }
 
@@ -1535,21 +1470,16 @@ public class Configuration
      *
      * @return the {@link SendChannelEndpointSupplier}.
      */
-    public static SendChannelEndpointSupplier sendChannelEndpointSupplier()
-    {
+    public static SendChannelEndpointSupplier sendChannelEndpointSupplier() {
         SendChannelEndpointSupplier supplier = null;
-        try
-        {
+        try {
             final String className = getProperty(SEND_CHANNEL_ENDPOINT_SUPPLIER_PROP_NAME);
-            if (null == className)
-            {
+            if (null == className) {
                 return new DefaultSendChannelEndpointSupplier();
             }
 
-            supplier = (SendChannelEndpointSupplier)Class.forName(className).getConstructor().newInstance();
-        }
-        catch (final Exception ex)
-        {
+            supplier = (SendChannelEndpointSupplier) Class.forName(className).getConstructor().newInstance();
+        } catch (final Exception ex) {
             LangUtil.rethrowUnchecked(ex);
         }
 
@@ -1562,21 +1492,16 @@ public class Configuration
      *
      * @return the {@link SendChannelEndpointSupplier}.
      */
-    public static ReceiveChannelEndpointSupplier receiveChannelEndpointSupplier()
-    {
+    public static ReceiveChannelEndpointSupplier receiveChannelEndpointSupplier() {
         ReceiveChannelEndpointSupplier supplier = null;
-        try
-        {
+        try {
             final String className = getProperty(RECEIVE_CHANNEL_ENDPOINT_SUPPLIER_PROP_NAME);
-            if (null == className)
-            {
+            if (null == className) {
                 return new DefaultReceiveChannelEndpointSupplier();
             }
 
-            supplier = (ReceiveChannelEndpointSupplier)Class.forName(className).getConstructor().newInstance();
-        }
-        catch (final Exception ex)
-        {
+            supplier = (ReceiveChannelEndpointSupplier) Class.forName(className).getConstructor().newInstance();
+        } catch (final Exception ex) {
             LangUtil.rethrowUnchecked(ex);
         }
 
@@ -1589,21 +1514,16 @@ public class Configuration
      *
      * @return the {@link FlowControlSupplier}.
      */
-    public static FlowControlSupplier unicastFlowControlSupplier()
-    {
+    public static FlowControlSupplier unicastFlowControlSupplier() {
         FlowControlSupplier supplier = null;
-        try
-        {
+        try {
             final String className = getProperty(UNICAST_FLOW_CONTROL_STRATEGY_SUPPLIER_PROP_NAME);
-            if (null == className)
-            {
+            if (null == className) {
                 return new DefaultUnicastFlowControlSupplier();
             }
 
-            supplier = (FlowControlSupplier)Class.forName(className).getConstructor().newInstance();
-        }
-        catch (final Exception ex)
-        {
+            supplier = (FlowControlSupplier) Class.forName(className).getConstructor().newInstance();
+        } catch (final Exception ex) {
             LangUtil.rethrowUnchecked(ex);
         }
 
@@ -1616,21 +1536,16 @@ public class Configuration
      *
      * @return the {@link FlowControlSupplier}.
      */
-    public static FlowControlSupplier multicastFlowControlSupplier()
-    {
+    public static FlowControlSupplier multicastFlowControlSupplier() {
         FlowControlSupplier supplier = null;
-        try
-        {
+        try {
             final String className = getProperty(MULTICAST_FLOW_CONTROL_STRATEGY_SUPPLIER_PROP_NAME);
-            if (null == className)
-            {
+            if (null == className) {
                 return new DefaultMulticastFlowControlSupplier();
             }
 
-            supplier = (FlowControlSupplier)Class.forName(className).getConstructor().newInstance();
-        }
-        catch (final Exception ex)
-        {
+            supplier = (FlowControlSupplier) Class.forName(className).getConstructor().newInstance();
+        } catch (final Exception ex) {
             LangUtil.rethrowUnchecked(ex);
         }
 
@@ -1642,21 +1557,16 @@ public class Configuration
      *
      * @return the {@link CongestionControlSupplier}
      */
-    public static CongestionControlSupplier congestionControlSupplier()
-    {
+    public static CongestionControlSupplier congestionControlSupplier() {
         CongestionControlSupplier supplier = null;
-        try
-        {
+        try {
             final String className = getProperty(CONGESTION_CONTROL_STRATEGY_SUPPLIER_PROP_NAME);
-            if (null == className)
-            {
+            if (null == className) {
                 return new DefaultCongestionControlSupplier();
             }
 
-            supplier = (CongestionControlSupplier)Class.forName(className).getConstructor().newInstance();
-        }
-        catch (final Exception ex)
-        {
+            supplier = (CongestionControlSupplier) Class.forName(className).getConstructor().newInstance();
+        } catch (final Exception ex) {
             LangUtil.rethrowUnchecked(ex);
         }
 
@@ -1669,10 +1579,8 @@ public class Configuration
      * @param initialWindowLength to be validated.
      * @param mtuLength           against which to validate.
      */
-    public static void validateInitialWindowLength(final int initialWindowLength, final int mtuLength)
-    {
-        if (mtuLength > initialWindowLength)
-        {
+    public static void validateInitialWindowLength(final int initialWindowLength, final int mtuLength) {
+        if (mtuLength > initialWindowLength) {
             throw new ConfigurationException("initial window length must be >= to MTU length: " + mtuLength);
         }
     }
@@ -1684,16 +1592,13 @@ public class Configuration
      * @param mtuLength to be validated.
      * @throws ConfigurationException if the MTU length is not valid.
      */
-    public static void validateMtuLength(final int mtuLength)
-    {
-        if (mtuLength <= DataHeaderFlyweight.HEADER_LENGTH || mtuLength > MAX_UDP_PAYLOAD_LENGTH)
-        {
+    public static void validateMtuLength(final int mtuLength) {
+        if (mtuLength <= DataHeaderFlyweight.HEADER_LENGTH || mtuLength > MAX_UDP_PAYLOAD_LENGTH) {
             throw new ConfigurationException(
-                "mtuLength must be a > HEADER_LENGTH and <= MAX_UDP_PAYLOAD_LENGTH: " + mtuLength);
+                    "mtuLength must be a > HEADER_LENGTH and <= MAX_UDP_PAYLOAD_LENGTH: " + mtuLength);
         }
 
-        if ((mtuLength & (FrameDescriptor.FRAME_ALIGNMENT - 1)) != 0)
-        {
+        if ((mtuLength & (FrameDescriptor.FRAME_ALIGNMENT - 1)) != 0) {
             throw new ConfigurationException("mtuLength must be a multiple of FRAME_ALIGNMENT: " + mtuLength);
         }
     }
@@ -1701,14 +1606,12 @@ public class Configuration
     /**
      * Validate the publication linger timeout is an appropriate value.
      *
-     * @param timeoutNs to be validated.
+     * @param timeoutNs             to be validated.
      * @param driverLingerTimeoutNs set for the driver operation.
      * @throws ConfigurationException if the values are not valid.
      */
-    public static void validatePublicationLingerTimeoutNs(final long timeoutNs, final long driverLingerTimeoutNs)
-    {
-        if (timeoutNs < driverLingerTimeoutNs)
-        {
+    public static void validatePublicationLingerTimeoutNs(final long timeoutNs, final long driverLingerTimeoutNs) {
+        if (timeoutNs < driverLingerTimeoutNs) {
             throw new ConfigurationException("linger=" + driverLingerTimeoutNs + " < timeoutNs =" + timeoutNs);
         }
     }
@@ -1719,21 +1622,16 @@ public class Configuration
      *
      * @return the {@link TerminationValidator}
      */
-    public static TerminationValidator terminationValidator()
-    {
+    public static TerminationValidator terminationValidator() {
         TerminationValidator validator = null;
-        try
-        {
+        try {
             final String className = getProperty(TERMINATION_VALIDATOR_PROP_NAME);
-            if (null == className)
-            {
+            if (null == className) {
                 return new DefaultDenyTerminationValidator();
             }
 
-            validator = (TerminationValidator)Class.forName(className).getConstructor().newInstance();
-        }
-        catch (final Exception ex)
-        {
+            validator = (TerminationValidator) Class.forName(className).getConstructor().newInstance();
+        } catch (final Exception ex) {
             LangUtil.rethrowUnchecked(ex);
         }
 
@@ -1745,56 +1643,48 @@ public class Configuration
      *
      * @param ctx to be validated.
      */
-    public static void validateSocketBufferLengths(final MediaDriver.Context ctx)
-    {
-        try (DatagramChannel probe = DatagramChannel.open())
-        {
+    public static void validateSocketBufferLengths(final MediaDriver.Context ctx) {
+        try (DatagramChannel probe = DatagramChannel.open()) {
             final int defaultSoSndBuf = probe.getOption(StandardSocketOptions.SO_SNDBUF);
 
             probe.setOption(StandardSocketOptions.SO_SNDBUF, Integer.MAX_VALUE);
             final int maxSoSndBuf = probe.getOption(StandardSocketOptions.SO_SNDBUF);
 
-            if (maxSoSndBuf < ctx.socketSndbufLength())
-            {
+            if (maxSoSndBuf < ctx.socketSndbufLength()) {
                 System.err.format(
-                    "WARNING: Could not get desired SO_SNDBUF, adjust OS to allow %s: attempted=%d, actual=%d%n",
-                    SOCKET_SNDBUF_LENGTH_PROP_NAME,
-                    ctx.socketSndbufLength(),
-                    maxSoSndBuf);
+                        "WARNING: Could not get desired SO_SNDBUF, adjust OS to allow %s: attempted=%d, actual=%d%n",
+                        SOCKET_SNDBUF_LENGTH_PROP_NAME,
+                        ctx.socketSndbufLength(),
+                        maxSoSndBuf);
             }
 
             probe.setOption(StandardSocketOptions.SO_RCVBUF, Integer.MAX_VALUE);
             final int maxSoRcvBuf = probe.getOption(StandardSocketOptions.SO_RCVBUF);
 
-            if (maxSoRcvBuf < ctx.socketRcvbufLength())
-            {
+            if (maxSoRcvBuf < ctx.socketRcvbufLength()) {
                 System.err.format(
-                    "WARNING: Could not get desired SO_RCVBUF, adjust OS to allow %s: attempted=%d, actual=%d%n",
-                    SOCKET_RCVBUF_LENGTH_PROP_NAME,
-                    ctx.socketRcvbufLength(),
-                    maxSoRcvBuf);
+                        "WARNING: Could not get desired SO_RCVBUF, adjust OS to allow %s: attempted=%d, actual=%d%n",
+                        SOCKET_RCVBUF_LENGTH_PROP_NAME,
+                        ctx.socketRcvbufLength(),
+                        maxSoRcvBuf);
             }
 
             final int soSndBuf = 0 == ctx.socketSndbufLength() ? defaultSoSndBuf : ctx.socketSndbufLength();
 
-            if (ctx.mtuLength() > soSndBuf)
-            {
+            if (ctx.mtuLength() > soSndBuf) {
                 throw new ConfigurationException(String.format(
-                    "MTU greater than socket SO_SNDBUF, adjust %s to match MTU: mtuLength=%d, SO_SNDBUF=%d",
-                    SOCKET_SNDBUF_LENGTH_PROP_NAME,
-                    ctx.mtuLength(),
-                    soSndBuf));
+                        "MTU greater than socket SO_SNDBUF, adjust %s to match MTU: mtuLength=%d, SO_SNDBUF=%d",
+                        SOCKET_SNDBUF_LENGTH_PROP_NAME,
+                        ctx.mtuLength(),
+                        soSndBuf));
             }
 
-            if (ctx.initialWindowLength() > maxSoRcvBuf)
-            {
+            if (ctx.initialWindowLength() > maxSoRcvBuf) {
                 throw new ConfigurationException("window length greater than socket SO_RCVBUF, increase '" +
-                    Configuration.INITIAL_WINDOW_LENGTH_PROP_NAME +
-                    "' to match window: windowLength=" + ctx.initialWindowLength() + ", SO_RCVBUF=" + maxSoRcvBuf);
+                        Configuration.INITIAL_WINDOW_LENGTH_PROP_NAME +
+                        "' to match window: windowLength=" + ctx.initialWindowLength() + ", SO_RCVBUF=" + maxSoRcvBuf);
             }
-        }
-        catch (final IOException ex)
-        {
+        } catch (final IOException ex) {
             throw new AeronException("probe socket: " + ex.toString(), ex);
         }
     }
@@ -1805,22 +1695,18 @@ public class Configuration
      * @param pageSize to be checked.
      * @throws ConfigurationException if the size is not as expected.
      */
-    public static void validatePageSize(final int pageSize)
-    {
-        if (pageSize < PAGE_MIN_SIZE)
-        {
+    public static void validatePageSize(final int pageSize) {
+        if (pageSize < PAGE_MIN_SIZE) {
             throw new ConfigurationException(
-                "page size less than min size of " + PAGE_MIN_SIZE + ": " + pageSize);
+                    "page size less than min size of " + PAGE_MIN_SIZE + ": " + pageSize);
         }
 
-        if (pageSize > PAGE_MAX_SIZE)
-        {
+        if (pageSize > PAGE_MAX_SIZE) {
             throw new ConfigurationException(
-                "page size greater than max size of " + PAGE_MAX_SIZE + ": " + pageSize);
+                    "page size greater than max size of " + PAGE_MAX_SIZE + ": " + pageSize);
         }
 
-        if (!BitUtil.isPowerOfTwo(pageSize))
-        {
+        if (!BitUtil.isPowerOfTwo(pageSize)) {
             throw new ConfigurationException("page size not a power of 2: " + pageSize);
         }
     }
@@ -1832,15 +1718,12 @@ public class Configuration
      * @param high value in the range.
      * @throws ConfigurationException if the values are not valid.
      */
-    public static void validateSessionIdRange(final int low, final int high)
-    {
-        if (low > high)
-        {
+    public static void validateSessionIdRange(final int low, final int high) {
+        if (low > high) {
             throw new ConfigurationException("low session id value " + low + " must be <= high value " + high);
         }
 
-        if (Math.abs((long)high - low) > Integer.MAX_VALUE)
-        {
+        if (Math.abs((long) high - low) > Integer.MAX_VALUE) {
             throw new ConfigurationException("reserved range too large");
         }
     }
@@ -1852,8 +1735,7 @@ public class Configuration
      * @param counterValuesBufferLength to compute the metadata buffer length from as a ratio.
      * @return the length that should be used for the metadata buffer for counters.
      */
-    public static int countersMetadataBufferLength(final int counterValuesBufferLength)
-    {
+    public static int countersMetadataBufferLength(final int counterValuesBufferLength) {
         return counterValuesBufferLength * (CountersReader.METADATA_LENGTH / CountersReader.COUNTER_LENGTH);
     }
 
@@ -1866,20 +1748,17 @@ public class Configuration
      * @throws ConfigurationException if the values are not valid.
      */
     public static void validateUnblockTimeout(
-        final long publicationUnblockTimeoutNs, final long clientLivenessTimeoutNs, final long timerIntervalNs)
-    {
-        if (publicationUnblockTimeoutNs <= clientLivenessTimeoutNs)
-        {
+            final long publicationUnblockTimeoutNs, final long clientLivenessTimeoutNs, final long timerIntervalNs) {
+        if (publicationUnblockTimeoutNs <= clientLivenessTimeoutNs) {
             throw new ConfigurationException(
-                "publicationUnblockTimeoutNs=" + publicationUnblockTimeoutNs +
-                " <= clientLivenessTimeoutNs=" + clientLivenessTimeoutNs);
+                    "publicationUnblockTimeoutNs=" + publicationUnblockTimeoutNs +
+                            " <= clientLivenessTimeoutNs=" + clientLivenessTimeoutNs);
         }
 
-        if (clientLivenessTimeoutNs <= timerIntervalNs)
-        {
+        if (clientLivenessTimeoutNs <= timerIntervalNs) {
             throw new ConfigurationException(
-                "clientLivenessTimeoutNs=" + clientLivenessTimeoutNs +
-                " <= timerIntervalNs=" + timerIntervalNs);
+                    "clientLivenessTimeoutNs=" + clientLivenessTimeoutNs +
+                            " <= timerIntervalNs=" + timerIntervalNs);
         }
     }
 
@@ -1892,20 +1771,17 @@ public class Configuration
      * @throws ConfigurationException if the values are not valid.
      */
     public static void validateUntetheredTimeouts(
-        final long untetheredWindowLimitTimeoutNs, final long untetheredRestingTimeoutNs, final long timerIntervalNs)
-    {
-        if (untetheredWindowLimitTimeoutNs <= timerIntervalNs)
-        {
+            final long untetheredWindowLimitTimeoutNs, final long untetheredRestingTimeoutNs, final long timerIntervalNs) {
+        if (untetheredWindowLimitTimeoutNs <= timerIntervalNs) {
             throw new ConfigurationException(
-                "untetheredWindowLimitTimeoutNs=" + untetheredWindowLimitTimeoutNs +
-                " <= timerIntervalNs=" + timerIntervalNs);
+                    "untetheredWindowLimitTimeoutNs=" + untetheredWindowLimitTimeoutNs +
+                            " <= timerIntervalNs=" + timerIntervalNs);
         }
 
-        if (untetheredRestingTimeoutNs <= timerIntervalNs)
-        {
+        if (untetheredRestingTimeoutNs <= timerIntervalNs) {
             throw new ConfigurationException(
-                "untetheredRestingTimeoutNs=" + untetheredRestingTimeoutNs +
-                " <= timerIntervalNs=" + timerIntervalNs);
+                    "untetheredRestingTimeoutNs=" + untetheredRestingTimeoutNs +
+                            " <= timerIntervalNs=" + timerIntervalNs);
         }
     }
 
@@ -1915,8 +1791,7 @@ public class Configuration
      * @param srcAddress to be used for the identity.
      * @return a source identity string for a given address.
      */
-    public static String sourceIdentity(final InetSocketAddress srcAddress)
-    {
+    public static String sourceIdentity(final InetSocketAddress srcAddress) {
         return srcAddress.getHostString() + ':' + srcAddress.getPort();
     }
 }

@@ -26,56 +26,54 @@ import java.net.InetSocketAddress;
 /**
  * Supplier of congestion control algorithms which is aware of channel URI params otherwise defaults to
  * {@link StaticWindowCongestionControl}.
+ * 拥塞控制算法的供应商知道信道URI参数，否则默认为
  */
-public class DefaultCongestionControlSupplier implements CongestionControlSupplier
-{
+public class DefaultCongestionControlSupplier implements CongestionControlSupplier {
+    
     /**
      * {@inheritDoc}
      */
+    @Override
     public CongestionControl newInstance(
-        final long registrationId,
-        final UdpChannel udpChannel,
-        final int streamId,
-        final int sessionId,
-        final int termLength,
-        final int senderMtuLength,
-        final InetSocketAddress controlAddress,
-        final InetSocketAddress sourceAddress,
-        final NanoClock nanoClock,
-        final MediaDriver.Context context,
-        final CountersManager countersManager)
-    {
+            final long registrationId,
+            final UdpChannel udpChannel,
+            final int streamId,
+            final int sessionId,
+            final int termLength,
+            final int senderMtuLength,
+            final InetSocketAddress controlAddress,
+            final InetSocketAddress sourceAddress,
+            final NanoClock nanoClock,
+            final MediaDriver.Context context,
+            final CountersManager countersManager) {
         final String ccStr = udpChannel.channelUri().get(CommonContext.CONGESTION_CONTROL_PARAM_NAME);
 
-        if (null == ccStr || StaticWindowCongestionControl.CC_PARAM_VALUE.equals(ccStr))
-        {
+        if (null == ccStr || StaticWindowCongestionControl.CC_PARAM_VALUE.equals(ccStr)) {
             return new StaticWindowCongestionControl(
-                registrationId,
-                udpChannel,
-                streamId,
-                sessionId,
-                termLength,
-                senderMtuLength,
-                controlAddress,
-                sourceAddress,
-                nanoClock,
-                context,
-                countersManager);
-        }
-        else if (CubicCongestionControl.CC_PARAM_VALUE.equals(ccStr))
-        {
+                    registrationId,
+                    udpChannel,
+                    streamId,
+                    sessionId,
+                    termLength,
+                    senderMtuLength,
+                    controlAddress,
+                    sourceAddress,
+                    nanoClock,
+                    context,
+                    countersManager);
+        } else if (CubicCongestionControl.CC_PARAM_VALUE.equals(ccStr)) {
             return new CubicCongestionControl(
-                registrationId,
-                udpChannel,
-                streamId,
-                sessionId,
-                termLength,
-                senderMtuLength,
-                controlAddress,
-                sourceAddress,
-                nanoClock,
-                context,
-                countersManager);
+                    registrationId,
+                    udpChannel,
+                    streamId,
+                    sessionId,
+                    termLength,
+                    senderMtuLength,
+                    controlAddress,
+                    sourceAddress,
+                    nanoClock,
+                    context,
+                    countersManager);
         }
 
         throw new IllegalArgumentException("unsupported congestion control : cc=" + ccStr);

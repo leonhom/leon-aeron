@@ -48,9 +48,17 @@ import static io.aeron.driver.status.SystemCounterDescriptor.SYSTEM_COUNTER_TYPE
  * <code>
  * java -cp aeron-samples/build/libs/samples.jar io.aeron.samples.AeronStat type=[1-9] identity=12345
  * </code>
+ * <p>
+ * 打印Aeron计数器的工具。命令和控制（CnC）文件由媒体驱动程序保存在共享内存中。此应用程序读取cnc文件并打印计数器。
+ * cnc文件的布局在{@link CncFileDescriptor}中描述。
+ * <p>
+ * 此工具接受命令行上的筛选器，例如，对于连接，请参见下面的示例：
+ * <code>
+ * java -cp aeron-samples/build/libs/samples.jar io.aeron.samples.AeronStat type=[1-9] identity=12345
+ * </code>
  */
-public class AeronStat
-{
+public class AeronStat {
+
     private static final String ANSI_CLS = "\u001b[2J";
     private static final String ANSI_HOME = "\u001b[H";
 
@@ -94,8 +102,7 @@ public class AeronStat
      */
     private static final String COUNTER_CHANNEL = "channel";
 
-    public static void main(final String[] args) throws Exception
-    {
+    public static void main(final String[] args) throws Exception {
         long delayMs = 1000L;
         boolean watch = true;
         Pattern typeFilter = null;
@@ -104,15 +111,12 @@ public class AeronStat
         Pattern streamFilter = null;
         Pattern channelFilter = null;
 
-        if (0 != args.length)
-        {
+        if (0 != args.length) {
             checkForHelp(args);
 
-            for (final String arg : args)
-            {
+            for (final String arg : args) {
                 final int equalsIndex = arg.indexOf('=');
-                if (-1 == equalsIndex)
-                {
+                if (-1 == equalsIndex) {
                     System.out.println("Arguments must be in name=pattern format: Invalid '" + arg + "'");
                     return;
                 }
@@ -120,8 +124,7 @@ public class AeronStat
                 final String argName = arg.substring(0, equalsIndex);
                 final String argValue = arg.substring(equalsIndex + 1);
 
-                switch (argName)
-                {
+                switch (argName) {
                     case WATCH:
                         watch = Boolean.parseBoolean(argValue);
                         break;
@@ -160,25 +163,20 @@ public class AeronStat
         final CncFileReader cncFileReader = CncFileReader.map();
 
         final CounterFilter counterFilter = new CounterFilter(
-            typeFilter, identityFilter, sessionFilter, streamFilter, channelFilter);
+                typeFilter, identityFilter, sessionFilter, streamFilter, channelFilter);
 
-        if (watch)
-        {
+        if (watch) {
             workLoop(delayMs, () -> printOutput(cncFileReader, counterFilter));
-        }
-        else
-        {
+        } else {
             printOutput(cncFileReader, counterFilter);
         }
     }
 
-    private static void workLoop(final long delayMs, final Runnable outputPrinter) throws Exception
-    {
+    private static void workLoop(final long delayMs, final Runnable outputPrinter) throws Exception {
         final AtomicBoolean running = new AtomicBoolean(true);
         SigInt.register(() -> running.set(false));
 
-        do
-        {
+        do {
             clearScreen();
             outputPrinter.run();
             Thread.sleep(delayMs);
@@ -186,69 +184,59 @@ public class AeronStat
         while (running.get());
     }
 
-    private static void printOutput(final CncFileReader cncFileReader, final CounterFilter counterFilter)
-    {
+    private static void printOutput(final CncFileReader cncFileReader, final CounterFilter counterFilter) {
         final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
 
         System.out.print(dateFormat.format(new Date()));
         System.out.println(
-            " - Aeron Stat (CnC v" + cncFileReader.semanticVersion() + ")" +
-            ", pid " + SystemUtil.getPid() +
-            ", heartbeat age " + cncFileReader.driverHeartbeatAgeMs() + "ms");
+                " - Aeron Stat (CnC v" + cncFileReader.semanticVersion() + ")" +
+                        ", pid " + SystemUtil.getPid() +
+                        ", heartbeat age " + cncFileReader.driverHeartbeatAgeMs() + "ms");
         System.out.println("======================================================================");
 
         final CountersReader counters = cncFileReader.countersReader();
 
         counters.forEach(
-            (counterId, typeId, keyBuffer, label) ->
-            {
-                if (counterFilter.filter(typeId, keyBuffer))
+                (counterId, typeId, keyBuffer, label) ->
                 {
-                    final long value = counters.getCounterValue(counterId);
-                    System.out.format("%3d: %,20d - %s%n", counterId, value, label);
+                    if (counterFilter.filter(typeId, keyBuffer)) {
+                        final long value = counters.getCounterValue(counterId);
+                        System.out.format("%3d: %,20d - %s%n", counterId, value, label);
+                    }
                 }
-            }
         );
 
         System.out.println("--");
     }
 
-    private static void checkForHelp(final String[] args)
-    {
-        for (final String arg : args)
-        {
-            if ("-?".equals(arg) || "-h".equals(arg) || "-help".equals(arg))
-            {
+    private static void checkForHelp(final String[] args) {
+        for (final String arg : args) {
+            if ("-?".equals(arg) || "-h".equals(arg) || "-help".equals(arg)) {
                 System.out.format(
-                    "Usage: [-Daeron.dir=<directory containing CnC file>] AeronStat%n" +
-                    "\t[delay=<seconds between updates>]%n" +
-                    "\t[watch=<true|false>]%n" +
-                    "filter by optional regex patterns:%n" +
-                    "\t[type=<pattern>]%n" +
-                    "\t[identity=<pattern>]%n" +
-                    "\t[sessionId=<pattern>]%n" +
-                    "\t[streamId=<pattern>]%n" +
-                    "\t[channel=<pattern>]%n");
+                        "Usage: [-Daeron.dir=<directory containing CnC file>] AeronStat%n" +
+                                "\t[delay=<seconds between updates>]%n" +
+                                "\t[watch=<true|false>]%n" +
+                                "filter by optional regex patterns:%n" +
+                                "\t[type=<pattern>]%n" +
+                                "\t[identity=<pattern>]%n" +
+                                "\t[sessionId=<pattern>]%n" +
+                                "\t[streamId=<pattern>]%n" +
+                                "\t[channel=<pattern>]%n");
 
                 System.exit(0);
             }
         }
     }
 
-    private static void clearScreen() throws Exception
-    {
-        if (SystemUtil.isWindows())
-        {
+    private static void clearScreen() throws Exception {
+        if (SystemUtil.isWindows()) {
             new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
-        }
-        else
-        {
+        } else {
             System.out.print(ANSI_CLS + ANSI_HOME);
         }
     }
 
-    static class CounterFilter
-    {
+    static class CounterFilter {
         private final Pattern typeFilter;
         private final Pattern identityFilter;
         private final Pattern sessionFilter;
@@ -256,12 +244,11 @@ public class AeronStat
         private final Pattern channelFilter;
 
         CounterFilter(
-            final Pattern typeFilter,
-            final Pattern identityFilter,
-            final Pattern sessionFilter,
-            final Pattern streamFilter,
-            final Pattern channelFilter)
-        {
+                final Pattern typeFilter,
+                final Pattern identityFilter,
+                final Pattern sessionFilter,
+                final Pattern streamFilter,
+                final Pattern channelFilter) {
             this.typeFilter = typeFilter;
             this.identityFilter = identityFilter;
             this.sessionFilter = sessionFilter;
@@ -269,33 +256,25 @@ public class AeronStat
             this.channelFilter = channelFilter;
         }
 
-        private static boolean match(final Pattern pattern, final Supplier<String> supplier)
-        {
+        private static boolean match(final Pattern pattern, final Supplier<String> supplier) {
             return null == pattern || pattern.matcher(supplier.get()).find();
         }
 
-        boolean filter(final int typeId, final DirectBuffer keyBuffer)
-        {
-            if (!match(typeFilter, () -> Integer.toString(typeId)))
-            {
+        boolean filter(final int typeId, final DirectBuffer keyBuffer) {
+            if (!match(typeFilter, () -> Integer.toString(typeId))) {
                 return false;
             }
 
-            if (SYSTEM_COUNTER_TYPE_ID == typeId && !match(identityFilter, () -> Integer.toString(keyBuffer.getInt(0))))
-            {
+            if (SYSTEM_COUNTER_TYPE_ID == typeId && !match(identityFilter, () -> Integer.toString(keyBuffer.getInt(0)))) {
                 return false;
-            }
-            else if ((typeId >= PUBLISHER_LIMIT_TYPE_ID && typeId <= RECEIVER_POS_TYPE_ID) ||
-                typeId == SENDER_LIMIT_TYPE_ID || typeId == PER_IMAGE_TYPE_ID || typeId == PUBLISHER_POS_TYPE_ID)
-            {
+            } else if ((typeId >= PUBLISHER_LIMIT_TYPE_ID && typeId <= RECEIVER_POS_TYPE_ID) ||
+                    typeId == SENDER_LIMIT_TYPE_ID || typeId == PER_IMAGE_TYPE_ID || typeId == PUBLISHER_POS_TYPE_ID) {
                 return
-                    match(identityFilter, () -> Long.toString(keyBuffer.getLong(REGISTRATION_ID_OFFSET))) &&
-                    match(sessionFilter, () -> Integer.toString(keyBuffer.getInt(SESSION_ID_OFFSET))) &&
-                    match(streamFilter, () -> Integer.toString(keyBuffer.getInt(STREAM_ID_OFFSET))) &&
-                    match(channelFilter, () -> keyBuffer.getStringAscii(CHANNEL_OFFSET));
-            }
-            else if (typeId >= SEND_CHANNEL_STATUS_TYPE_ID && typeId <= RECEIVE_CHANNEL_STATUS_TYPE_ID)
-            {
+                        match(identityFilter, () -> Long.toString(keyBuffer.getLong(REGISTRATION_ID_OFFSET))) &&
+                                match(sessionFilter, () -> Integer.toString(keyBuffer.getInt(SESSION_ID_OFFSET))) &&
+                                match(streamFilter, () -> Integer.toString(keyBuffer.getInt(STREAM_ID_OFFSET))) &&
+                                match(channelFilter, () -> keyBuffer.getStringAscii(CHANNEL_OFFSET));
+            } else if (typeId >= SEND_CHANNEL_STATUS_TYPE_ID && typeId <= RECEIVE_CHANNEL_STATUS_TYPE_ID) {
                 return match(channelFilter, () -> keyBuffer.getStringAscii(ChannelEndpointStatus.CHANNEL_OFFSET));
             }
 

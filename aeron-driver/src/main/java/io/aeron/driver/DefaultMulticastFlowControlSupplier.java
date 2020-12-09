@@ -24,19 +24,18 @@ import static io.aeron.driver.Configuration.MULTICAST_FLOW_CONTROL_STRATEGY;
 /**
  * Default supplier of {@link FlowControl} strategies for multicast streams which supports defining the strategy in
  * the channel URI as a priority over {@link Configuration#MULTICAST_FLOW_CONTROL_STRATEGY_PROP_NAME}.
+ * 多播流的{@link FlowControl}策略的默认供应商，它支持将信道URI中的策略定义为优先于{@link Configuration #multicast_FLOW_CONTROL_strategy_PROP_NAME}
  */
-public class DefaultMulticastFlowControlSupplier implements FlowControlSupplier
-{
-    public FlowControl newInstance(final UdpChannel udpChannel, final int streamId, final long registrationId)
-    {
+public class DefaultMulticastFlowControlSupplier implements FlowControlSupplier {
+
+    @Override
+    public FlowControl newInstance(final UdpChannel udpChannel, final int streamId, final long registrationId) {
         final String fcStr = udpChannel.channelUri().get(CommonContext.FLOW_CONTROL_PARAM_NAME);
-        if (null != fcStr)
-        {
+        if (null != fcStr) {
             final int delimiter = fcStr.indexOf(',');
             final String strategyStr = -1 == delimiter ? fcStr : fcStr.substring(0, delimiter);
 
-            switch (strategyStr)
-            {
+            switch (strategyStr) {
                 case MaxMulticastFlowControl.FC_PARAM_VALUE:
                     return MaxMulticastFlowControl.INSTANCE;
 
@@ -51,37 +50,28 @@ public class DefaultMulticastFlowControlSupplier implements FlowControlSupplier
             }
         }
 
-        if (MaxMulticastFlowControl.class.getName().equals(MULTICAST_FLOW_CONTROL_STRATEGY))
-        {
+        if (MaxMulticastFlowControl.class.getName().equals(MULTICAST_FLOW_CONTROL_STRATEGY)) {
             return MaxMulticastFlowControl.INSTANCE;
-        }
-        else if (MinMulticastFlowControl.class.getName().equals(MULTICAST_FLOW_CONTROL_STRATEGY))
-        {
+        } else if (MinMulticastFlowControl.class.getName().equals(MULTICAST_FLOW_CONTROL_STRATEGY)) {
             return new MinMulticastFlowControl();
-        }
-        else if (TaggedMulticastFlowControl.class.getName().equals(MULTICAST_FLOW_CONTROL_STRATEGY))
-        {
+        } else if (TaggedMulticastFlowControl.class.getName().equals(MULTICAST_FLOW_CONTROL_STRATEGY)) {
             return new TaggedMulticastFlowControl();
         }
 
         FlowControl flowControl = null;
-        try
-        {
-            flowControl = (FlowControl)Class.forName(MULTICAST_FLOW_CONTROL_STRATEGY)
-                .getConstructor()
-                .newInstance();
-        }
-        catch (final Exception ex)
-        {
+        try {
+            flowControl = (FlowControl) Class.forName(MULTICAST_FLOW_CONTROL_STRATEGY)
+                    .getConstructor()
+                    .newInstance();
+        } catch (final Exception ex) {
             LangUtil.rethrowUnchecked(ex);
         }
 
         return flowControl;
     }
 
-    public String toString()
-    {
+    public String toString() {
         return "DefaultMulticastFlowControlSupplier{flowControlClass=" +
-            MULTICAST_FLOW_CONTROL_STRATEGY + "}";
+                MULTICAST_FLOW_CONTROL_STRATEGY + "}";
     }
 }

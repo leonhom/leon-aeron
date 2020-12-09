@@ -22,8 +22,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * Aeron client library tracker.
  */
-final class AeronClient implements DriverManagedResource
-{
+final class AeronClient implements DriverManagedResource {
     private final long clientId;
     private final long clientLivenessTimeoutMs;
     private boolean reachedEndOfLife = false;
@@ -32,30 +31,27 @@ final class AeronClient implements DriverManagedResource
     private final AtomicCounter heartbeatTimestamp;
 
     AeronClient(
-        final long clientId,
-        final long clientLivenessTimeoutNs,
-        final AtomicCounter clientTimeouts,
-        final AtomicCounter heartbeatTimestamp)
-    {
+            final long clientId,
+            final long clientLivenessTimeoutNs,
+            final AtomicCounter clientTimeouts,
+            final AtomicCounter heartbeatTimestamp) {
         this.clientId = clientId;
         this.clientLivenessTimeoutMs = Math.max(1, TimeUnit.NANOSECONDS.toMillis(clientLivenessTimeoutNs));
         this.clientTimeouts = clientTimeouts;
         this.heartbeatTimestamp = heartbeatTimestamp;
     }
 
-    public void close()
-    {
+    @Override
+    public void close() {
         heartbeatTimestamp.close();
     }
 
-    public void onTimeEvent(final long timeNs, final long timeMs, final DriverConductor conductor)
-    {
-        if (timeMs > (heartbeatTimestamp.get() + clientLivenessTimeoutMs))
-        {
+    @Override
+    public void onTimeEvent(final long timeNs, final long timeMs, final DriverConductor conductor) {
+        if (timeMs > (heartbeatTimestamp.get() + clientLivenessTimeoutMs)) {
             reachedEndOfLife = true;
 
-            if (!closedByCommand)
-            {
+            if (!closedByCommand) {
                 clientTimeouts.incrementOrdered();
                 conductor.clientTimeout(clientId);
             }
@@ -64,28 +60,24 @@ final class AeronClient implements DriverManagedResource
         }
     }
 
-    public boolean hasReachedEndOfLife()
-    {
+    @Override
+    public boolean hasReachedEndOfLife() {
         return reachedEndOfLife;
     }
 
-    long clientId()
-    {
+    long clientId() {
         return clientId;
     }
 
-    boolean hasTimedOut()
-    {
+    boolean hasTimedOut() {
         return reachedEndOfLife;
     }
 
-    void timeOfLastKeepaliveMs(final long nowMs)
-    {
+    void timeOfLastKeepaliveMs(final long nowMs) {
         heartbeatTimestamp.setOrdered(nowMs);
     }
 
-    void onClosedByCommand()
-    {
+    void onClosedByCommand() {
         closedByCommand = true;
         heartbeatTimestamp.setOrdered(0);
     }
